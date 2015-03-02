@@ -13,7 +13,7 @@ namespace BAS.ConfigUtil.Test
             Item1,
             Item2,
             Item3
-        }
+        } 
 
          
         [TestMethod]
