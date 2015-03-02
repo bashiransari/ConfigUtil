@@ -7,7 +7,7 @@ namespace BAS.ConfigUtil.Test
 {
     [TestClass]
     public class StringParserTest
-    {
+    { 
         public enum testEnum
         {
             Item1,
