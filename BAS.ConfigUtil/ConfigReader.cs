@@ -27,13 +27,11 @@ namespace BAS.ConfigUtil
 
         }
 
-        public void ReadConfig(object theobject, bool tracevalues = false)
+        public void ReadConfig(object theobject, IConfigSource configSource = null)
         {
-            ReadConfig(theobject, new AppSettingsConfigSource(), tracevalues);
-        }
+            if (configSource == null)
+                configSource = ConfigSourceFactory.GetDefaultSource();
 
-        public void ReadConfig(object theobject, IConfigSource configSource, bool tracevalues = false)
-        {
             Type type = theobject.GetType();
 
             try
@@ -60,8 +58,8 @@ namespace BAS.ConfigUtil
                         continue;
                     }
 
-                    if (tracevalues)
-                        this.Logger.TraceFormat("{0} = {1}", configName, temp);
+                    //if (tracevalues)
+                    //    this.Logger.TraceFormat("{0} = {1}", configName, temp);
 
                     object propValue;
                     if (StringParser.TryParse(temp, prop.PropertyType, out propValue))

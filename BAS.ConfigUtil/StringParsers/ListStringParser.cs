@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 using System.Text;
-using System.Xml.Schema;
+
 
 namespace BAS.ConfigUtil.StringParsers
 {
@@ -19,7 +18,7 @@ namespace BAS.ConfigUtil.StringParsers
 
         public override object Parse(string value, Type type)
         {
-            var seprator = ",";
+            var seprator = StringParser.ListSeprator;
             var items = value.Split(new string[] { seprator }, StringSplitOptions.RemoveEmptyEntries);
             var itemsType = type.GetGenericArguments()[0];
 
@@ -46,7 +45,7 @@ namespace BAS.ConfigUtil.StringParsers
             foreach (var item in list)
             {
                 listStr.Append(StringParser.ToString(item, type));
-                listStr.Append(",");
+                listStr.Append(StringParser.ListSeprator);
             }
             return listStr.ToString();
         }

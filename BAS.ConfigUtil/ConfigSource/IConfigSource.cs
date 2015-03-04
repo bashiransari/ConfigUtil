@@ -4,9 +4,9 @@
     {
         bool HasKey(string key);
         string GetValue(string key);
-
         void SetValue(string key, string value);
-        //bool FlushValues();
+        
+        bool FlushValues();
         string GetConfigString();
     }
 }

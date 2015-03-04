@@ -3,9 +3,9 @@ using System.Web.Script.Serialization;
 
 namespace BAS.ConfigUtil.ConfigSource
 {
-    class JsonConfigSource : DictionaryConfigSource
+    class JsonStringConfigSource : DictionaryConfigSource
     {
-        public JsonConfigSource(string JsonString)
+        public JsonStringConfigSource(string JsonString)
             : base(new Dictionary<string, string>())
         {
             var jss = new JavaScriptSerializer();

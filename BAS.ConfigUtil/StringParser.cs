@@ -37,6 +37,8 @@ namespace BAS.ConfigUtil
 
         #endregion
 
+        public static string ListSeprator { get; set; }
+
         #region Methods
         public static void ClearParsers()
         {
@@ -67,11 +69,11 @@ namespace BAS.ConfigUtil
             }
         }
 
-        public static bool TryConvertToString(object value,Type type, out string output)
+        public static bool TryConvertToString(object value, Type type, out string output)
         {
             try
             {
-                output = ToString(value,type);
+                output = ToString(value, type);
                 return true;
             }
             catch (Exception ex)

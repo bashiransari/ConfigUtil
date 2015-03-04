@@ -32,5 +32,10 @@ namespace BAS.ConfigUtil.ConfigSource
             var jss = new JavaScriptSerializer();
             return jss.Serialize(settingSource);
         }
+
+        public virtual bool FlushValues()
+        {
+            return true;
+        }
     }
 }

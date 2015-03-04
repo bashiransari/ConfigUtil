@@ -66,11 +66,12 @@ namespace BAS.ConfigUtil
         }
         public bool WriteConfig(object theobject, bool useDefaultValues = false)
         {
-            var appSettingSource = new AppSettingsConfigSource();
+            var appSettingSource = ConfigSourceFactory.GetDefaultSource();
             WriteConfig(theobject, appSettingSource, useDefaultValues);
 
-            appSettingSource.config.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection("appSettings");
+            appSettingSource.FlushValues();
+            //appSettingSource.config.Save(ConfigurationSaveMode.Modified);
+            //ConfigurationManager.RefreshSection("appSettings");
             return true;
         }
 
