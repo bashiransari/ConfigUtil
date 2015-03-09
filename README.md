@@ -3,7 +3,7 @@ Small utility for loading/saving properties of .Net classes as string values int
 
 If you want to load some properties values from app.config or any other sources like a Json string stored in DB or file ConfigUtil will do it for you in best way.
 
-Installation: 
+Installation using nuget: 
 Install-Package ConfigUtil
 
 All you should do is to decorate you properties with ConfigProp attribute, you can specify default value and custom title for properties too, then you should call this.LoadConfiguration() method in class constructor any method.
