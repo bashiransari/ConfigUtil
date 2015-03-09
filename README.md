@@ -24,6 +24,7 @@ All you should do is to decorate you properties with ConfigProp attribute, you c
            this.LoadConfiguration();//loads the configuration from app.config file (appSettings section)
         }
     }
-
- * You can use other sources instead of app.config too, [[click here to see Config Sources|Config-Sources]]    
- * ConfigUtil supports most of common data types, to see list of supported data types [[click here|Supported-Datatypes]]
+ 
+ * You can use other sources instead of app.config too, see Config Sources on wiki .
+ * ConfigUtil supports most of common data types, to see list of supported data types see Supported Datatypes on wiki .
+ * See wiki pages for more information.
