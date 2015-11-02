@@ -55,48 +55,6 @@ namespace BAS.ConfigUtil
             }
         }
 
-        public static bool TryParse(string value, Type type, out object output)
-        {
-            try
-            {
-                output = Parse(value, type);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                output = null;
-                return false;
-            }
-        }
-
-        public static bool TryConvertToString(object value, Type type, out string output)
-        {
-            try
-            {
-                output = ToString(value, type);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                output = null;
-                return false;
-            }
-        }
-
-        public static bool TryParse<T>(string value, out T output)
-        {
-            try
-            {
-                output = Parse<T>(value);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                output = default(T);
-                return false;
-            }
-        }
-
         public static object Parse(string value, Type type)
         {
             var parser = FindParser(type);

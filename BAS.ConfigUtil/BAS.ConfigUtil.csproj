@@ -60,7 +60,6 @@
     <Compile Include="ExtetionMethods.cs" />
     <Compile Include="ConfigSource\IConfigSource.cs" />
     <Compile Include="ConfigSource\JsonStringConfigSource.cs" />
-    <Compile Include="ILog.cs" />
     <Compile Include="StringParsers\BaseStringParser.cs" />
     <Compile Include="StringParsers\ListStringParser.cs" />
     <Compile Include="StringParsers\EnumStringParser.cs" />

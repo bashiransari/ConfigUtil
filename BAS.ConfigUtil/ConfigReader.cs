@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Configuration;
-//using Common.Logging;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -14,10 +13,8 @@ namespace BAS.ConfigUtil
     public class ConfigReader
     {
         public string Prefix { get; set; }
-        readonly ILog Logger;
         public ConfigReader(string prefix)
         {
-            //this.Logger = LogManager.GetLogger("CfgReader");
             this.Prefix = prefix;
         }
 
@@ -58,24 +55,22 @@ namespace BAS.ConfigUtil
                         continue;
                     }
 
-                    //if (tracevalues)
-                    //    this.Logger.TraceFormat("{0} = {1}", configName, temp);
-
                     object propValue;
-                    if (StringParser.TryParse(temp, prop.PropertyType, out propValue))
+                    try
                     {
-                        prop.SetValue(theobject, propValue, null);
+                        propValue = StringParser.Parse(temp, prop.PropertyType);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        this.Logger.WarnFormat("Invalid configuration value for \"{0}\" , Value:{1}", prop.Name, temp);
+                        throw new InvalidCastException(string.Format("Invalid configuration value for \"{0}\" , Value:{1}", prop.Name, temp), ex);
                     }
 
+                    prop.SetValue(theobject, propValue, null);
                 }
             }
             catch (Exception ex)
             {
-                this.Logger.WarnFormat("cannot load configuration for {0}", ex, type.ToString());
+                throw new InvalidOperationException(string.Format("cannot load configuration for {0}", ex, type.ToString()), ex);
             }
         }
 
@@ -89,29 +84,21 @@ namespace BAS.ConfigUtil
                     {
                         property.SetValue(theObject, defaultValue, null);
                     }
-                    else if (defaultValue.GetType() == typeof(string))
+                    object propValue;
+                    try
                     {
-                        object propValue;
-                        if (StringParser.TryParse(defaultValue.ToString(),
-                            property.PropertyType, out propValue))
-                        {
-                            property.SetValue(theObject, propValue, null);
-                        }
-                        else
-                        {
-                            this.Logger.WarnFormat("Invalid configuration value for \"{0}\" , Value:{1}",
-                                property.Name, defaultValue);
-                        }
+                        propValue = StringParser.Parse(defaultValue.ToString(), property.PropertyType);
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        throw new InvalidCastException(string.Format("Cannot cast Defaultvalue for {0} property to {1}", property.Name, property.PropertyType.FullName));
+                        throw new InvalidCastException(string.Format("Invalid configuration value for \"{0}\" , Value:{1}", property.Name, defaultValue), ex);
                     }
+                    property.SetValue(theObject, propValue, null);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                this.Logger.WarnFormat("Invalid default value for \"{0}\" , Value:{1}", property.Name, defaultValue);
+                throw new InvalidOperationException(string.Format("Invalid default value for \"{0}\" , Value:{1}", property.Name, defaultValue), ex);
             }
             return true;
         }

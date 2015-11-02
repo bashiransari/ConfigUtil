@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Configuration;
-//using Common.Logging;
 using System.Drawing;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -14,10 +13,8 @@ namespace BAS.ConfigUtil
     public class ConfigWriter
     {
         public string Prefix { get; set; }
-        readonly ILog Logger;
         public ConfigWriter(string prefix)
         {
-            //this.Logger = LogManager.GetLogger("CfgReader");
             this.Prefix = prefix;
         }
 
@@ -49,14 +46,15 @@ namespace BAS.ConfigUtil
                     propValue = prop.GetValue(theobject, new object[] { }) ?? "";
 
                 string propStrValue = "";
-                if (StringParser.TryConvertToString(propValue, prop.PropertyType, out propStrValue))
+                try
                 {
-                    configSource.SetValue(this.Prefix + "." + configName, propStrValue);
+                    propValue = StringParser.ToString(propValue, prop.PropertyType);
                 }
-                else
+                catch (Exception ex)
                 {
-                    this.Logger.WarnFormat("Cannot convert value for \"{0}\" property to string.", prop.Name);
+                    throw new InvalidOperationException(String.Format("Cannot convert value for \"{0}\" property to string.", prop.Name), ex);
                 }
+                configSource.SetValue(this.Prefix + "." + configName, propStrValue);
             }
             return true;
         }
@@ -70,8 +68,6 @@ namespace BAS.ConfigUtil
             WriteConfig(theobject, appSettingSource, useDefaultValues);
 
             appSettingSource.FlushValues();
-            //appSettingSource.config.Save(ConfigurationSaveMode.Modified);
-            //ConfigurationManager.RefreshSection("appSettings");
             return true;
         }
 
